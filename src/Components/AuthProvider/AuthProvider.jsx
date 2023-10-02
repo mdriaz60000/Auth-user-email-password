@@ -8,16 +8,20 @@ export const AuthContext = createContext(null)
 const AuthProvider = ({children}) => {
     
 const [user, setUser] = useState(null)
+const [lodding, setLodding]= useState(true)
 
 const createUser = (email, password) => {
+// setLodding(true)
  return   createUserWithEmailAndPassword(auth, email, password);
 }
 
 const signInUser =(email, password) =>{
+    //setLodding(true)
     return signInWithEmailAndPassword(auth, email, password);
 }
 
 const logOut = () =>{
+    //setLodding(true)
  return  signOut(auth);
 }
 
@@ -25,6 +29,7 @@ const logOut = () =>{
   const unSubscribe =  onAuthStateChanged(auth, currentUser =>{
         setUser(currentUser)
         console.log('ovserving current user inside useEffect to AuthProvider', currentUser)
+        //setLodding(false)
     })
 
     return () =>{
@@ -33,7 +38,13 @@ const logOut = () =>{
 
  },[])
 
-const authInfo = {user, createUser, signInUser, logOut}
+const authInfo = {
+    user,
+    //lodding
+     createUser,
+     signInUser,
+     logOut
+    }
 
     return (
     <AuthContext.Provider value={authInfo}>
